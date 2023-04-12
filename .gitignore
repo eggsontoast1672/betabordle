@@ -1,5 +1,8 @@
-.cache/
+# Visual studio
 .vs/
-build/
 out/
+
+# Other
+.cache/
+build/
 

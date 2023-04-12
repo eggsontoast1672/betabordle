@@ -1,18 +1,20 @@
-﻿#include <iostream>
+﻿// Keybordle.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include <iostream>
 #include <stdlib.h>
 #include <time.h>
 
-int main() {
-    srand(time(nullptr));
-
-    std::cout << "Keybordle!" << std::endl;
-    std::cout << "The goal is simple, find the secret keybordle by guessing" << std::endl;
-    std::cout << "Just enter a string of appropriate lengthand the computer will tell you if the letter in the alphabet is:" << std::endl;
-    std::cout << "After the letter you entered(1)" << std::endl;
-    std::cout << "Before the letter you entered(0)" << std::endl;
-    std::cout << "The same(the letter)" << std::endl;
-    std::cout << "How many letters?" << std::endl;
-
+int main()
+{
+    //clearly unoptomized
+    //abcdefghijklm|nopqrstuvwxyz
+    //abcdef g hijklm|nopqrs t uvwxyz
+    //abc|def g hij|klm|nop|qrs t uvw|xyz
+    //abcdefg
+    std::cout << "Keybordle!\n";
+    std::cout << "The goal is simple, find the secret keybordle by guessing \nJust enter a string of appropriate length and the computer will tell you if the letter in the alphabet is:\nAfter the letter you entered(1)\nBefore the letter you entered(0)\nThe same(the letter)\n";
+    std::cout << "How many letters?\n";
     int alphalen;
     std::cin >> alphalen;
     if (alphalen > 26) {
@@ -24,13 +26,12 @@ int main() {
     std::cout << "How long of a game?\n";
     int len;
     std::cin >> len;
-    
     std::string bet = "abcdefghijklmnopqrstuvwxyz";
     std::string alpha = "abcdefghijklmnopqrstuvwxyz";
     std::string keybordle = "";
-    
+    std::string pointless;
     auto guessNum = 0;
-
+    srand(time(0));
     bool pass = false;
     bet.substr(0, alphalen);
     
@@ -47,17 +48,20 @@ int main() {
         //keybordle was: psyeiuxdwbnjzkcqmvholtgafr
         if (guess.length() != alphalen) {
             std::cout << "Oops, wrong length!" << std::endl;
-        } else {
+        }
+        else {
             bool success = true;
             std::string answer;
             for (int i = 0; i < alphalen; i++) {
                 if (guess.substr(i, 1) == keybordle.substr(i, 1)) {
                     alpha.find_first_of(keybordle.substr(i, 1));
                     answer += keybordle.substr(i, 1);
-                } else if (alpha.find_first_of(guess.substr(i, 1)) > alpha.find_first_of(keybordle.substr(i, 1))) {
+                }
+                else if (alpha.find_first_of(guess.substr(i, 1)) > alpha.find_first_of(keybordle.substr(i, 1))) {
                     answer += "0";
                     success = false;
-                } else {
+                }
+                else {
                     answer += "1";
                     success = false;
                 }
@@ -71,12 +75,23 @@ int main() {
         }
         guessNum++;
     }
-    
     if (pass) {
         std::cout << "Consider Playing again!";
-    } else {
-        std::cout << "You lose!";
+        std::cin >> pointless;
     }
-
-    std::cin.get();
+    else {
+        std::cout << "You lose!";
+        std::cin >> pointless;
+    }
 }
+
+// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
+// Debug program: F5 or Debug > Start Debugging menu
+
+// Tips for Getting Started: 
+//   1. Use the Solution Explorer window to add/manage files
+//   2. Use the Team Explorer window to connect to source control
+//   3. Use the Output window to see build output and other messages
+//   4. Use the Error List window to view errors
+//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
+//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
